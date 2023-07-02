@@ -6,14 +6,10 @@ import Login from "../../screens/Login/Login";
 
 function MainRouter() {
     return (
-        <Router>
-            <Routes>
-
-                <Route path="/" element={<Login />} />
-                <Route path="/index" element={<AppRouter />} />
-            </Routes>
-
-        </Router>
+        <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/index" element={<AppRouter />} />
+        </Routes>
     )
 }
 

@@ -1,7 +1,9 @@
 import React from "react";
-import { styled } from "styled-components"
+import { useNavigate } from "react-router-dom";
+import { styled } from "styled-components";
 
 function Login() {
+    const navigate = useNavigate();
     return(
         <MainContainer>
             <ContentContainer>
@@ -11,7 +13,7 @@ function Login() {
                         <input type="text" placeholder="Enter username" />
                         <input type="password" placeholder="Enter password" />
                     </InputContainer>
-                    <SubmitButton>Submit</SubmitButton>
+                    <SubmitButton onClick={() => navigate("/index")}>Submit</SubmitButton>
                 </BottomContainer>
             </ContentContainer>
         </MainContainer>
