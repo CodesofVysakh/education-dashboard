@@ -3,9 +3,11 @@ import Reducer from "./Reducer";
 
 const initialState = {
     user_data: {
-        accessToken: "",
+        name: "",
         username: "",
         email: "",
+        isVerified: "",
+        role: ""
     },
 };
 

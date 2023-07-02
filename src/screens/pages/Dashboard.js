@@ -1,11 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Add from "../../assets/images/add.svg";
 import DisplayCard from "../includes/Cards/DisplayCard";
 import VerticalChart from "../includes/Charts/VerticalChart";
 import DoughnutChart from "../includes/Charts/DoughnutChart";
+import { Axios } from "../../axiosConfig";
 
 function Dashboard() {
+    const [ isLoading, setIsLoading ] = useState(false);
+    const [ studentCount, setStudentCount ] = useState("");
+    const [ enrollmentCount, setEnrollmentCount ] = useState("");
+
+    const handleEnrollmentData = () => {
+        // setIsLoading(true);
+
+        Axios
+            .get(`api/v1/activity/dashboard-list/`)
+            .then((response) => {
+                console.log(response)
+                if(response.data.StatusCode === 6000){
+                    setStudentCount(response.data.data.student_count)
+                    setEnrollmentCount(response.data.data.enrollment_count)
+                    setIsLoading(false);
+                }else{
+                    setIsLoading(false);
+                }
+            })
+            .catch((error) => {
+                setIsLoading(false);
+
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        handleEnrollmentData();
+        console.log(studentCount, enrollmentCount);
+    }, [isLoading])
+    
+
     return (
         <Container>
             <TopBar>
@@ -13,8 +46,18 @@ function Dashboard() {
             </TopBar>
             <BottomBar>
                 <CoverCard>
-                    <DisplayCard />
-                    <DisplayCard />
+                    <DisplayCard 
+                        title="No. of Students"
+                        number={studentCount}
+                        label="nos"
+                        category="statistics"
+                    />
+                    <DisplayCard 
+                        title="Enrollments"
+                        number={enrollmentCount}
+                        label="nos"
+                        category="statistics"
+                    />
                 </CoverCard>
             </BottomBar>
             <GraphContainer>

@@ -1,18 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import Add from "../../../assets/images/add.svg";
 
-function DisplayCard({ title, icon, number, label }) {
+function DisplayCard({ title, category, number, label, duration, description, count }) {
+
     return (
-        <Container>
+        <Container count={count}>
             {/* <Icon>
                 <img src={Add} alt="icon" />
             </Icon> */}
-            <Title>No. of Students</Title>
-            <Cover>
-                <h1>1222</h1>
-                <h3>nos </h3>
-            </Cover>
+            <Title category={category}>{title}</Title>
+            {category == "statistics" ? 
+                <Cover>
+                    <h2>{number}</h2>
+                    <h3>{label}</h3>
+                </Cover>
+            :
+                category == "course" ?
+                    <ContentContainer>
+                        <h3>Duration: {duration} hours</h3>
+                        <p>{description}</p>
+                        <button>{label}</button>
+                    </ContentContainer>
+                    : null
+            
+            }
         </Container>
     );
 }
@@ -23,15 +35,14 @@ const Container = styled.div`
     position: relative;
     background-color: #fff;
     padding: 20px 30px;
-    width: 100%;
-    /* height: 250px; */
-    margin-right: 20px;
+    width: ${(prop) => prop.count < 20 ? `${prop.count}%` : '100%' };
+    margin: 5px 15px;
     border: 1px solid #dfe8ed;
     border-radius: 8px;
     &:last-child {
         margin-right: 0;
     }
-    h1 {
+    h2 {
         color: #596332;
         font-size: 40px;
         margin-right: 10px;
@@ -39,14 +50,16 @@ const Container = styled.div`
     h3 {
         color: #596332;
         font-family: "inter_regular";
-        font-size: 22px;
+        font-size: 14px;
+        text-align: center;
+        margin: 10px 0;
     }
 `;
 const Cover = styled.div`
     display: flex;
     align-items: baseline;
     margin-top: 10px;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
 `;
 const Icon = styled.div`
     width: 55px;
@@ -64,14 +77,19 @@ const Title = styled.h4`
     color: #747474;
     font-family: "inter_regular";
     font-weight: unset;
-    font-size: 20px;
+    font-size: ${(prop) => prop.category == "statistics" ? "20px" : "25px"};
+    text-align: ${(prop) => prop.category == "statistics" ? "left" : "center"};
 `;
-const Curve = styled.div`
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    img {
-        width: 100%;
+const ContentContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    button {
         display: block;
+        padding: 10px 20px;
+        background-color: #29c8a878;
+        border: none;
+        border-radius: 4px;
+        margin: 10px auto;
     }
 `;

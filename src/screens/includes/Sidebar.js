@@ -14,23 +14,29 @@ const Sidebar = () => {
                 <h1>Edu-Com</h1>
             </Left>
             <Navigation>
-                <NavLinks to="/index">
+                <NavLinks to="/">
                     <ImageContainer>
                         <img src={Add} />
                     </ImageContainer>
                     <h4>Dashboard</h4>
                 </NavLinks>
-                <NavLinks to="/index">
+                <NavLinks to="/student">
                     <ImageContainer>
                         <img src={Add} />
                     </ImageContainer>
                     <h4>Students List</h4>
                 </NavLinks>
-                <NavLinks to="/index">
+                <NavLinks to="/course">
                     <ImageContainer>
                         <img src={Add} />
                     </ImageContainer>
                     <h4>Course List</h4>
+                </NavLinks>
+                <NavLinks to="/profile">
+                    <ImageContainer>
+                        <img src={Add} />
+                    </ImageContainer>
+                    <h4>Profile</h4>
                 </NavLinks>
             </Navigation>
         </Cover>

@@ -1,6 +1,6 @@
 import "./App.css";
 import Store from "./components/context/Store";
-import MainRouter from "./components/routing/MainRouter";
+import MainRouter from "./components/routing/router/MainRouter";
 import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 
