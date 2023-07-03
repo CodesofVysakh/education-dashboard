@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import Add from '../../assets/images/add.svg'
 import { styled } from 'styled-components'
+import { Context } from "../../components/context/Store";
 
 const Sidebar = () => {
+    const { state, dispatch } = useContext(Context)
+    const role = state.user_data.role;
 
     return (
         <Cover>
@@ -13,32 +16,61 @@ const Sidebar = () => {
                 </LogoContainer>
                 <h1>Edu-Com</h1>
             </Left>
-            <Navigation>
-                <NavLinks to="/">
-                    <ImageContainer>
-                        <img src={Add} />
-                    </ImageContainer>
-                    <h4>Dashboard</h4>
-                </NavLinks>
-                <NavLinks to="/student">
-                    <ImageContainer>
-                        <img src={Add} />
-                    </ImageContainer>
-                    <h4>Students List</h4>
-                </NavLinks>
-                <NavLinks to="/course">
-                    <ImageContainer>
-                        <img src={Add} />
-                    </ImageContainer>
-                    <h4>Course List</h4>
-                </NavLinks>
-                <NavLinks to="/profile">
-                    <ImageContainer>
-                        <img src={Add} />
-                    </ImageContainer>
-                    <h4>Profile</h4>
-                </NavLinks>
-            </Navigation>
+            {role == "admin" ? 
+                <Navigation>
+                    <NavLinks to="/">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Dashboard</h4>
+                    </NavLinks>
+                    <NavLinks to="/student-list">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Students List</h4>
+                    </NavLinks>
+                    <NavLinks to="/course">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Course List</h4>
+                    </NavLinks>
+                    <NavLinks to="/create">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Add Subject</h4>
+                    </NavLinks>
+                    <NavLinks to="/profile">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Profile</h4>
+                    </NavLinks>
+                </Navigation>
+                :
+                <Navigation>
+                    <NavLinks to="/student/">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Dashboard</h4>
+                    </NavLinks>
+                    <NavLinks to="/student/enroll-course">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Course List</h4>
+                    </NavLinks>
+                    <NavLinks to="/student/student-profile">
+                        <ImageContainer>
+                            <img src={Add} />
+                        </ImageContainer>
+                        <h4>Profile</h4>
+                    </NavLinks>
+                </Navigation>
+            }
         </Cover>
     );
 };
@@ -109,7 +141,6 @@ const NavLinks = styled(Link)`
 
     h4 {
         color: #000;
-        font-family: "inter_light";
     }
 `;
 

@@ -42,6 +42,8 @@ function Login() {
                             name: response.data.data.name,
                             username: response.data.data.username,
                             email: response.data.data.email,
+                            dob: response.data.data.dob,
+                            id: response.data.data.id,
                             isVerified: response.data.data.is_verified,
                             role: response.data.data.role,
                         }
@@ -87,6 +89,8 @@ function Login() {
                             name: response.data.data.name,
                             username: response.data.data.username,
                             email: response.data.data.email,
+                            dob: response.data.data.dob,
+                            id: response.data.data.id,
                             isVerified: response.data.data.is_verified,
                             role: response.data.data.role,
                         }

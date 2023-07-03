@@ -5,6 +5,8 @@ const initialState = {
     user_data: {
         name: "",
         username: "",
+        dob : "",
+        id: "",
         email: "",
         isVerified: "",
         role: ""

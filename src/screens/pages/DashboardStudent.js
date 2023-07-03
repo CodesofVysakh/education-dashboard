@@ -1,41 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Add from "../../assets/images/add.svg";
 import DisplayCard from "../includes/Cards/DisplayCard";
 import VerticalChart from "../includes/Charts/VerticalChart";
 import DoughnutChart from "../includes/Charts/DoughnutChart";
 import { Axios } from "../../axiosConfig";
+import { Context } from "../../components/context/Store";
 
-function Dashboard() {
+function DashboardStudent() {
     const [ isLoading, setIsLoading ] = useState(false);
-    const [ studentCount, setStudentCount ] = useState("");
+    const [ studentData, setStudentData ] = useState("");
     const [ enrollmentCount, setEnrollmentCount ] = useState("");
+
+    const { state, dispatch } = useContext(Context);
+    const userData = state.user_data
 
     const handleEnrollmentData = () => {
         // setIsLoading(true);
-
-        Axios
-            .get(`api/v1/activity/admin-dashboard-list/`)
-            .then((response) => {
-                console.log(response)
-                if(response.data.StatusCode === 6000){
-                    setStudentCount(response.data.data.student_count)
-                    setEnrollmentCount(response.data.data.enrollment_count)
+        if(userData?.id){
+            Axios
+                .post(`api/v1/activity/dashboard-list/`,{
+                    student_id: userData.id
+                },{})
+                .then((response) => {
+                    console.log(response)
+                    if(response.data.StatusCode === 6000){
+                        setStudentData(response.data.data)
+                        setEnrollmentCount(response.data.data.enrollment_count)
+                        setIsLoading(false);
+                    }else{
+                        setIsLoading(false);
+                    }
+                })
+                .catch((error) => {
                     setIsLoading(false);
-                }else{
-                    setIsLoading(false);
-                }
-            })
-            .catch((error) => {
-                setIsLoading(false);
-
-                console.log(error)
-            })
+    
+                    console.log(error)
+                })
+        }
     }
 
     useEffect(() => {
         handleEnrollmentData();
-    }, [isLoading])
+        console.log(studentData, enrollmentCount);
+    }, [])
     
 
     return (
@@ -43,11 +51,11 @@ function Dashboard() {
             <TopBar>
                 <Title>Dashboard</Title>
             </TopBar>
-            <BottomBar>
+            {/* <BottomBar>
                 <CoverCard>
                     <DisplayCard 
                         title="No. of Students"
-                        number={studentCount}
+                        number={studentData.studentCount}
                         label="nos"
                         category="statistics"
                     />
@@ -58,26 +66,39 @@ function Dashboard() {
                         category="statistics"
                     />
                 </CoverCard>
-            </BottomBar>
+            </BottomBar> */}
             <GraphContainer>
-                <Cover>
+                {/* <Cover>
                     <TitleCover>
                         <CoverTitle>Students Registration</CoverTitle>
                         <VerticalChart />
                     </TitleCover>
-                </Cover>
+                </Cover> */}
                 <Cover>
                     <TitleCover>
                         <CoverTitle>Course Popularity</CoverTitle>
                         <DoughnutChart />
                     </TitleCover>
                 </Cover>
+                {studentData?.courses?.length > 0 &&
+                    <Cover>
+                        <EnrollTitleCover>
+                            <CoverTitle>Course Enrolled</CoverTitle>
+                            <div>
+                                {studentData?.courses?.map((item, index) => (
+                                    <p key={index}>{item}</p>
+                                ))}
+                            </div>
+                        </EnrollTitleCover>
+                    </Cover>
+                
+                }
             </GraphContainer>
         </Container>
     );
 }
 
-export default Dashboard;
+export default DashboardStudent;
 
 const Container = styled.div`
     padding: 20px;
@@ -115,7 +136,7 @@ const Cover = styled.div`
         margin-right: 0;
     }
 `;
-const TitleCover = styled.h3`
+const TitleCover = styled.div`
     color: #0a0a0a;
     display: flex;
     flex-direction: column;
@@ -124,8 +145,19 @@ const TitleCover = styled.h3`
     height: 100%;
     padding: 10px;
     box-sizing: border-box;
+
+    p{
+        font-size: 14px;
+    }
 `;
-const CoverTitle = styled.div``;
+const CoverTitle = styled.h3`
+    margin-bottom: 10px;
+
+`;
+const EnrollTitleCover = styled.div`
+    ${CoverTitle}{
+    }
+`;
 const Drop = styled.div`
     display: flex;
     align-items: center;
@@ -134,3 +166,4 @@ const Drop = styled.div`
     color: #0a0a0a;
     font-size: 14px;
 `;
+

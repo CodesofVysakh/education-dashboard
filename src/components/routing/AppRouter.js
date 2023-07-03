@@ -1,14 +1,12 @@
 import React, { useContext } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Sidebar from "../../screens/includes/Sidebar";
-import Header from "../../screens/includes/Header";
 import { styled } from 'styled-components'
-import Login from "../../screens/Login/Login";
-import Dashboard from "../../screens/pages/Dashboard";
-import StudentList from "../../screens/pages/StudentList";
-import CourseList from "../../screens/pages/CourseList";
-import Profile from "../../screens/pages/Profile";
 import { Context } from "../context/Store";
+import AdminRoute from "./routes/AdminRoute";
+import AdminRouter from "./router/AdminRouter";
+import StudentRouter from "./router/StudentRouter";
+import StudentRoute from "./routes/StudentRoute";
 
 function AppRouter() {
     const { state, dispatch } = useContext(Context);
@@ -21,12 +19,22 @@ function AppRouter() {
             </Left>
             <Right>
                 <Routes>
-                    <Route path="/" element={<Header />}>
-                        <Route exact path="/" element={<Dashboard />} />
-                        <Route path="/student" element={<StudentList />} />
-                        <Route path="/course" element={<CourseList />} />
-                        <Route path="/profile" element={<Profile />} />
-                    </Route>
+                    <Route
+                        path="/*"
+                        element={
+                            <AdminRoute>
+                                <AdminRouter />
+                            </AdminRoute>
+                        }
+                    />
+                    <Route
+                        path="/student/*"
+                        element={
+                            <StudentRoute>
+                                <StudentRouter />
+                            </StudentRoute>
+                        }
+                    />
                 </Routes>
             </Right>
         </Container>

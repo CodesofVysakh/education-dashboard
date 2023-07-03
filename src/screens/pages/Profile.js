@@ -42,7 +42,6 @@ const Container = styled.div`
 
     h3 {
         color: #596332;
-        font-family: "inter_regular";
         font-size: 22px;
         margin-bottom: 20px;
     }
@@ -68,7 +67,6 @@ const Icon = styled.div`
 `;
 const Title = styled.h4`
     color: #747474;
-    font-family: "inter_regular";
     font-weight: unset;
     font-size: 30px;
     margin-bottom: 20px;

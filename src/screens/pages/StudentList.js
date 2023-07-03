@@ -85,7 +85,6 @@ const ListContainer = styled.div`
     
     h3 {
         color: #747474;
-        font-family: "inter_regular";
         font-size: 22px;
     }
 `;
@@ -113,7 +112,6 @@ const Row = styled.div`
 const HeadColumnData = styled.div`
     color: #747474;
     font-size: 18px;
-    font-family: "inter_light";
     width: 20%;
     &:first-child{
         width: 5%;
@@ -122,7 +120,6 @@ const HeadColumnData = styled.div`
 const ColumnData = styled.div`
     color: #0A0A0A;
     font-size: 18px;
-    font-family: "inter_light";
     width: 20%;
     &:first-child{
         width: 5%;
